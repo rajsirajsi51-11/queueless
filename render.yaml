@@ -4,7 +4,7 @@ services:
     runtime: docker
     repo: https://github.com/rajsirajsi51-11/queueless
     branch: main
-    dockerfilePath: ./backend/Dockerfile
+    dockerfilePath: ./Dockerfile
     dockerContext: ./backend
     plan: free
     healthCheckPath: /api/v1/health
@@ -12,6 +12,6 @@ services:
       - key: DEV_AUTH_ENABLED
         value: false
       - key: CORS_ORIGINS
-        sync: false
+        value: https://queueless-brown.vercel.app
       - key: FIREBASE_PROJECT_ID
-        sync: false
+        value: queueless-live-20261028
