@@ -11,7 +11,17 @@ def create_app(config=None):
     app=Flask(__name__)
     app.config.from_object(Config)
     if config: app.config.update(config)
-    CORS(app, origins=app.config["CORS_ORIGINS"])
+    allowed_origins = app.config["CORS_ORIGINS"]
+    CORS(app, origins=allowed_origins)
+
+    @app.after_request
+    def add_cors_headers(response):
+        origin = request.headers.get("Origin")
+        if origin in allowed_origins:
+            response.headers["Access-Control-Allow-Origin"] = origin
+            response.headers["Vary"] = "Origin"
+        return response
+
     store=create_store(); service=QueueService(store)
     auth=require_auth(store, app.config["DEV_AUTH_ENABLED"])
 
