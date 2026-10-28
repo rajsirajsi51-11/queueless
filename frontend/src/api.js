@@ -1,5 +1,5 @@
 export const API_BASE = import.meta.env.VITE_API_BASE_URL ||
-  (import.meta.env.PROD ? 'https://queueless-api-dx66.onrender.com' : 'http://localhost:5000');
+  (import.meta.env.PROD ? '/api' : 'http://localhost:5000');
 export async function api(path, options={}) {
   const demoUid=localStorage.getItem('queueless-demo-uid');
   const headers={'Content-Type':'application/json',...(demoUid?{'X-Dev-Uid':demoUid}:{}),...(options.headers||{})};
