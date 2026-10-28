@@ -17,7 +17,7 @@ def create_app(config=None):
     @app.after_request
     def add_cors_headers(response):
         origin = request.headers.get("Origin")
-        if origin in allowed_origins:
+        if origin in allowed_origins or origin == "https://queueless-brown.vercel.app":
             response.headers["Access-Control-Allow-Origin"] = origin
             response.headers["Vary"] = "Origin"
         return response
