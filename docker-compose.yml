@@ -1,0 +1,11 @@
+services:
+  api:
+    build: ./backend
+    ports: ["5000:5000"]
+    env_file: .env.example
+    environment:
+      DEV_AUTH_ENABLED: "true"
+  web:
+    build: ./frontend
+    ports: ["5173:80"]
+    depends_on: [api]
