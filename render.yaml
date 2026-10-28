@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: queueless-api
+    runtime: docker
+    repo: https://github.com/rajsirajsi51-11/queueless
+    branch: main
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: DEV_AUTH_ENABLED
+        value: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
