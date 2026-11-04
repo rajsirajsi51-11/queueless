@@ -15,7 +15,7 @@ FROM maven:3.9-eclipse-temurin-21 AS backend
 WORKDIR /build/backend
 COPY backend/ ./
 COPY --from=frontend /build/frontend/dist /build/frontend/dist
-RUN mvn -B -q -DskipTests package
+RUN mvn -B -s maven-settings.xml -q -DskipTests package
 
 # 3) Run the jar
 FROM eclipse-temurin:21-jre-alpine
