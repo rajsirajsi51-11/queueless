@@ -82,4 +82,13 @@ public class OrganizationAdministrationService {
         memberships.addInitialAdmin(organization.getId(), admin.getId());
         return OrganizationResponse.from(organization);
     }
+
+    /** Self-service provisioning: creates an organization and makes its creator its first ADMIN. */
+    @Transactional
+    public OrganizationResponse claimOrganization(UUID userId, String name, String slug, String description,
+            String timezone) {
+        Organization organization = organizations.create(name, slug, description, timezone);
+        memberships.addInitialAdmin(organization.getId(), userId);
+        return OrganizationResponse.from(organization);
+    }
 }

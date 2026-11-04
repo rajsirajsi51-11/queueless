@@ -67,7 +67,9 @@ public class AuthController {
         limiter.recordAttempt(ipKey, limits.registration().maxPerIp(), limits.registration().window(),
                 limits.registration().window());
 
-        User user = authService.register(body.email(), body.fullName(), body.password());
+        User user = authService.register(body.email(), body.fullName(), body.password(),
+                body.organizationName(), body.organizationSlug(), body.organizationDescription(),
+                body.organizationTimezone());
         AuthenticatedUser principal = AuthenticatedUser.withoutCredentials(user);
         Authentication authentication =
                 UsernamePasswordAuthenticationToken.authenticated(principal, null, principal.getAuthorities());

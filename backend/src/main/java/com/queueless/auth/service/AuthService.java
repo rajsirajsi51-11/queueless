@@ -5,6 +5,7 @@ import com.queueless.auth.domain.UserRepository;
 import com.queueless.common.error.ApiException;
 import com.queueless.common.error.ErrorCode;
 import com.queueless.common.time.TimeProvider;
+import com.queueless.membership.service.OrganizationAdministrationService;
 import java.nio.charset.StandardCharsets;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,14 @@ public class AuthService {
     private final UserRepository users;
     private final PasswordEncoder passwordEncoder;
     private final TimeProvider time;
+    private final OrganizationAdministrationService organizationAdministration;
 
-    public AuthService(UserRepository users, PasswordEncoder passwordEncoder, TimeProvider time) {
+    public AuthService(UserRepository users, PasswordEncoder passwordEncoder, TimeProvider time,
+            OrganizationAdministrationService organizationAdministration) {
         this.users = users;
         this.passwordEncoder = passwordEncoder;
         this.time = time;
+        this.organizationAdministration = organizationAdministration;
     }
 
     /**
@@ -31,7 +35,8 @@ public class AuthService {
      * roles: those come only from memberships created by an organization administrator.
      */
     @Transactional
-    public User register(String email, String fullName, String rawPassword) {
+    public User register(String email, String fullName, String rawPassword, String organizationName,
+            String organizationSlug, String organizationDescription, String organizationTimezone) {
         String normalizedEmail = EmailNormalizer.normalize(email);
         if (rawPassword.getBytes(StandardCharsets.UTF_8).length > MAX_PASSWORD_BYTES) {
             throw new ApiException(ErrorCode.VALIDATION_FAILED, "Password must be at most 72 bytes long");
@@ -42,6 +47,15 @@ public class AuthService {
         User user = new User(normalizedEmail, fullName.trim(), passwordEncoder.encode(rawPassword), time.now());
         // Flush now so a concurrent registration of the same email fails inside this call
         // (uq_users_email) and is reported as 409 rather than a commit-time error.
-        return users.saveAndFlush(user);
+        User savedUser = users.saveAndFlush(user);
+        if (organizationName != null || organizationSlug != null) {
+            if (organizationName == null || organizationSlug == null || organizationTimezone == null) {
+                throw new ApiException(ErrorCode.VALIDATION_FAILED,
+                        "Organization name, address and time zone are required");
+            }
+            organizationAdministration.claimOrganization(savedUser.getId(), organizationName, organizationSlug,
+                    organizationDescription, organizationTimezone);
+        }
+        return savedUser;
     }
 }

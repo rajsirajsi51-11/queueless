@@ -89,7 +89,15 @@ export function useLogin() {
 export function useRegister() {
   const client = useQueryClient();
   return useMutation({
-    mutationFn: (body: { email: string; fullName: string; password: string }) =>
+    mutationFn: (body: {
+      email: string;
+      fullName: string;
+      password: string;
+      organizationName?: string;
+      organizationSlug?: string;
+      organizationDescription?: string;
+      organizationTimezone?: string;
+    }) =>
       api<CurrentUser>('/api/auth/register', { method: 'POST', body }),
     onSuccess: (user) => switchIdentity(client, user),
   });
