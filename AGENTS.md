@@ -4,8 +4,6 @@ QueueLess is a Spring Boot 3.5 (Java 21) + React 19 (TypeScript, Vite) queue and
 system on PostgreSQL. Read [docs/roadmap.md](docs/roadmap.md) before changing anything: it lists
 the phases, invariants, conventions and the pitfalls already hit in this codebase.
 
-> **Unfinished work:** read [NEXT_STEPS.md](NEXT_STEPS.md) first (merge into `main`, deploy).
-
 ## Commands
 
 ```bash
