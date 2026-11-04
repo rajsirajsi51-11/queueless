@@ -31,6 +31,7 @@ frontend/playwright/.cache/
 *.iml
 .vscode/*
 !.vscode/extensions.json
+!.vscode/mcp.json
 .DS_Store
 Thumbs.db
 .smoke-state
