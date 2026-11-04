@@ -15,6 +15,7 @@ FROM maven:3.9-eclipse-temurin-21 AS backend
 WORKDIR /build/backend
 COPY backend/ ./
 COPY --from=frontend /build/frontend/dist /build/frontend/dist
+ENV MAVEN_OPTS="-Dmaven.wagon.http.retryHandler.count=5 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true"
 RUN mvn -B -s maven-settings.xml -U -DskipTests package
 
 # 3) Run the jar
