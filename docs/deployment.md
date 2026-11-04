@@ -3,9 +3,9 @@
 QueueLess runs as one Docker container on Render's free plan, with its database on Neon's free
 PostgreSQL. Render rebuilds the container from the `Dockerfile` every time `main` changes.
 
-**Status: not deployed yet.** The production build was checked locally: it ran with the `prod`
-profile against a fresh database, and both the 36-check smoke test and the after-restart check
-passed ([testing.md](testing.md)). The account steps below are yours to do.
+**Status: deployed.** QueueLess is running at https://queueless-o8mf.onrender.com with a Neon
+PostgreSQL database. The 36-check smoke test and the 4-check persistence test passed
+([testing.md](testing.md)).
 
 ![Deployment diagram](diagrams/png/07-deployment-architecture.png)
 
@@ -122,11 +122,11 @@ Fill this in after step 4. Do not include any secrets.
 
 | Item | Value |
 |---|---|
-| Public URL | _pending_ |
-| Deployed commit | _pending_ |
+| Public URL | https://queueless-o8mf.onrender.com |
+| Deployed commit | 30abee7df4a312a2b9e70394e6368b5717d3705c |
 | Render region and plan | Singapore, free |
-| Database | Neon free, AWS Singapore, direct connection |
-| Smoke test (36 checks) | _pending_ |
-| After-restart check (4 checks) | _pending_ |
+| Database | Neon free, AWS Asia Pacific (Singapore), direct connection |
+| Smoke test (36 checks) | Passed: 36, Failed: 0 |
+| After-restart check (4 checks) | Passed: 4, Failed: 0 |
 | Live update checked in two browsers | _pending_ |
 | Time to wake after sleeping | _pending_ |
