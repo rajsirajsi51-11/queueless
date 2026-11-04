@@ -39,7 +39,7 @@ Secrets are never stored in Git; `.env.example` lists the variables with placeho
 
 ### 1. Code on GitHub
 
-The repository is at https://github.com/Nikhilnmv/QueueLess. Render deploys the `main` branch, so
+The deployment repository is https://github.com/rajsirajsi51-11/queueless. Render deploys the `main` branch, so
 merge finished work into `main` first.
 
 ### 2. Create the database on Neon
