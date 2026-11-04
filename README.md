@@ -29,6 +29,14 @@ You need JDK 21, Node 22 or newer, and the PostgreSQL 17 server (`brew install p
 scripts/run-local.sh
 ```
 
+On Windows PowerShell, use:
+
+```powershell
+.\scripts\run-local.ps1
+```
+
+If source files change, rebuild with `.\scripts\run-local.ps1 -Rebuild`.
+
 Open http://localhost:8080 and log in with a demo account. The password is `Password123!`.
 
 | Email | Role |
